@@ -28,11 +28,13 @@ class Body extends Component {
     const { userData } = newProps
     if (userData && userData.data) {
       this.setState({
-        resultData: userData.data
+        resultData: userData.data,
+        maxPage: Math.ceil(userData.data.length / 5)
       })
     }
   }
 
+  // handle input change value
   handleChange =(key, value)=> {
     this.setState({
       [key]: value
@@ -47,6 +49,7 @@ class Body extends Component {
     })
   }
 
+  // filter gender and search by keyword
   filterSearch=(keyword)=>{
     const { userData } = this.props
     const lowerKeyword = keyword.toLowerCase()
@@ -65,16 +68,21 @@ class Body extends Component {
   }
 
   render () {
-    const { gender, resultData} = this.state
+    const { gender, resultData } = this.state
+
     return (
       <div className='app-container'>
         <label className='body-title'>
           Example With Search and Filter
         </label>
+
+        {/* for component filter and search */}
         <FilterSearch
         gender={gender}
         handleChange={this.handleChange}
         filterSearch={this.filterSearch}/>
+
+        {/* for component data table */}
         <DataTables
           userData={resultData}
         />

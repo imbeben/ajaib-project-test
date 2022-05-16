@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+
+// config
 import config from '../config'
 
 class FilterSearch extends Component {
@@ -9,6 +11,7 @@ class FilterSearch extends Component {
     }
   }
 
+  // for reset filter gender & search keyword
   resetFilter=()=>{
     this.setState({
       keyword: ''
@@ -18,11 +21,16 @@ class FilterSearch extends Component {
   }
 
   render () {
+    // get data from state
     const { keyword } = this.state
+    // get data from props
     const { gender } = this.props
+    // get data from config
     const listGender = config.gender
+    // mapping gender from config
     const renderGender = listGender.map((data, index) => {
       return (
+        // return option for select
         <option key={index} value={data.value}>
           {data.gender}
         </option>
@@ -38,7 +46,7 @@ class FilterSearch extends Component {
             <div className="input-group mb-3">
                 <input type="text" className="form-control" placeholder='Search...'
                 onChange={(e) => this.setState({keyword: e.target.value})} value={keyword.toUpperCase()} />
-                <button className='button-search' style={{marginLeft: '5px'}} type="button" onClick={()=> {this.props.filterSearch(keyword)}}>
+                <button className='button-search' type="button" onClick={()=> {this.props.filterSearch(keyword)}}>
                   <i className='fa fa-search padding-left-right-xs' />
                 </button>
              </div>
@@ -51,7 +59,7 @@ class FilterSearch extends Component {
               <select type="text" className="form-select" value={gender} onChange={(e) => {this.props.handleChange('gender', e.target.value); ; this.setState({keyword: ''})}} >
               {renderGender}
               </select>
-              <button className='button-reset' style={{marginLeft: '5px'}} type="button" onClick={() => this.resetFilter()}>Reset Filter</button>
+              <button className='button-reset' type="button" onClick={() => this.resetFilter()}>Reset Filter</button>
             </div>
           </div>
         </div>

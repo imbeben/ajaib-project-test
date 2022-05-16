@@ -14,7 +14,6 @@ export const getUser = function * (api) {
 // attempts to fetch product
 export function * getUserAPI (api, { data }) {
   try {
-    // get lower and upper price bound
     const response = yield call(api.getUser, data)
     if (response.ok) {
       yield put(UserActions.userSuccess(response.data.results))

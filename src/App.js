@@ -7,7 +7,7 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      location: 'Example View'
+      location: 'Example Page'
     }
   }
 

@@ -1,26 +1,23 @@
 import React, { Component } from 'react'
+
+// library
 import moment from 'moment'
 import DataTable from 'react-data-table-component';
 
 class DataTables extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-    }
-  }
-
+  // for render table
   renderTable (userData) {
     let newData =[]
     for (let index = 0; index < userData.length; index++) {
       const element = userData[index];
-      const a = {
+      const data = {
         username: element.id && element.id.name && element.id.value ? `${element.id.name} ${element.id.value}` : '-',
         name: element.name && element.name.title && element.name.first && element.name.last ? `${element.name.title} ${element.name.first} ${element.name.last}` : '-',
         email: element.email ? element.email : '-',
         gender: element.gender ? element.gender : '-',
         date: element.registered ? moment(element.registered.date).format('YYYY-MM-DD HH:m:s') : '-'
       }
-      newData.push(a)
+      newData.push(data)
     }
 
     const columns = [
@@ -53,6 +50,7 @@ class DataTables extends Component {
       
       return(
       <div> 
+        {/* from library data table */}
         <DataTable
             columns={columns}
             data={newData}
@@ -68,6 +66,7 @@ class DataTables extends Component {
   }
 
   render () {
+    // get data from props
     const { userData } = this.props
 
     return (
