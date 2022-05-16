@@ -80,6 +80,58 @@ apiURL: endpoint to get data, connect to repo backend
 ```
 
 ## How to Start the application
-```sh
+```
 npm run start or npm start
 ```
+## Method that can implement for Better Web Performance
+**Disable Query Strings for Static Resources**
+example: 
+```
+weblink.com/home?page=2 // with querry string
+weblink.com/home // without querry string
+```
+**Minify Website’s Scripts**
+Minification of resources means removing unnecessary characters from your HTML, JavaScript, and CSS that are not required to load, such as:
+
+- White space characters
+- New line characters
+- Comments
+- Block delimiters
+
+example for css: 
+```
+#bluetext {
+font-size: 2em;
+color: blue;
+}
+
+#redtext {
+font-size: 1em;
+color: red;
+}
+```
+after minify
+```
+#bluetext{font-size:2em;color:blue;}#redtext{font-size:1em;color:red;}
+```
+
+By removing the empty spaces within that code, we can reduce its file size. For a few lines of code, that might not have a significant impact. However, when you consider just how many scripts a modern site has, minification can make a noticeable difference in loading times
+
+**Reduce HTTP requests**
+When your browser fetches data from a server it does so using HTTP (Hypertext Transfer Protocol). It is a request/response between a client and a host. In general the more HTTP requests your web page makes the slower it will load.
+
+There are many ways you can reduce the number of requests such as:
+
+- Inline your JavaScript (only if it is very small)
+- Reducing assets such as third party plugins that make a large number of external requests
+- Don't use third party frameworks unless they are absolutely needed
+- Use less code (Clean code)
+
+The number of requests a particular website must make varies greatly from site to site. Running a site speed test will tell you how many requests were needed in order to generate a particular page.
+
+**Serve scaled images**
+You should always upload your images at scale and not rely on CSS to size them down. If you do you will run into this little Google PageSpeed recommendation: Optimization suggestion: "By compressing and adjusting the size of ... you can save 5.8 KB (51%).
+
+This recommendation refers to your images being scaled down by your browser. For example, maybe the image you upload has a 400px width, but the column it was placed in is only 300px wide. This results in your image being scaled down to 300px due to CSS so that it matches the column size. It is better to always upload images at scale and also upload multiple resolutions of your images and serve the right resolution for the right device.
+
+It is not always possible to avoid scaling with CSS, especially if you are working with high resolution retina devices.

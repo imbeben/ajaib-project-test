@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-
 // library
 import moment from 'moment'
 import DataTable from 'react-data-table-component';
+// Config
+import config from '../config';
 
 class DataTables extends Component {
   // for render table
   renderTable (userData) {
+    const columns = config.columns
     let newData =[]
     for (let index = 0; index < userData.length; index++) {
       const element = userData[index];
@@ -19,34 +21,6 @@ class DataTables extends Component {
       }
       newData.push(data)
     }
-
-    const columns = [
-      {
-        name: 'Username',
-        selector: row => row.username,
-        sortable: true,
-      },
-      {
-        name: 'Name',
-        selector: row => row.name,
-        sortable: true,
-      },
-      {
-        name: 'Email',
-        selector: row => row.email,
-        sortable: true,
-      },
-      {
-        name: 'Gender',
-        selector: row => row.gender,
-        sortable: true,
-      },
-      {
-        name: 'Registered Date',
-        selector: row => row.date,
-        sortable: true,
-      }
-    ]
       
       return(
       <div> 
