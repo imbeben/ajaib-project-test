@@ -1,27 +1,28 @@
-import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import Body from './Containers/Body'
+import { MDBBreadcrumb, MDBBreadcrumbItem } from "mdbreact";
 
-function App () {
-  return (
-    <div className='App'>
-      {/* <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header> */}
+import React, { Component } from 'react';
+
+class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      location: 'Example View'
+    }
+  }
+
+  render() {
+    const { location } = this.state
+    return (
+    <div className='App padding-left-right-s padding-top-s'>
+      <MDBBreadcrumb>
+         <MDBBreadcrumbItem>Home</MDBBreadcrumbItem>
+         <MDBBreadcrumbItem active>{location}</MDBBreadcrumbItem>
+       </MDBBreadcrumb>
       <Body />
     </div>
-  )
+    );
+  }
 }
 
-export default App
+export default App;

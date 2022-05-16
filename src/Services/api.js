@@ -11,10 +11,8 @@ const create = (baseURL = apiURL) => {
   })
 
   const getUser = (data) => {
-    const offset = data.offset
-    const limit = data.limit
     const gender = data.gender
-    return apiWrapper.get(`/api?page=${offset}&results=${limit}&gender=${gender}`)
+    return apiWrapper.get(`/api?results=500&gender=${gender}`)
   }
 
   return {

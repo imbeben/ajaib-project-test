@@ -13,7 +13,6 @@ export const getUser = function * (api) {
 
 // attempts to fetch product
 export function * getUserAPI (api, { data }) {
-  console.log('🚀 ~ file: UserSagas.js ~ line 16 ~ *getUserAPI ~ data', data)
   try {
     // get lower and upper price bound
     const response = yield call(api.getUser, data)

@@ -1,31 +1,36 @@
 import React, { Component } from 'react'
 import UserActions from '../Redux/reducer/UserRedux'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 // Components
-import DataTable from '../Components/DataTable'
+import DataTables from '../Components/DataTables'
 import FilterSearch from '../Components/FilterSearch'
-import Paginations from '../Components/Paginations'
 
 class Body extends Component {
   constructor (props) {
     super(props)
     this.state = {
       gender: '',
-      offset: 1,
-      limit: 5,
-      currentPage: 1
+      resultData: []
     }
   }
 
   componentDidMount () {
-    const { offset, limit, gender } = this.state
+    const { gender } = this.state
     const data = {
-        offset,
-        limit,
         gender
     }
     this.props.userRequest(data)
+  }
+
+  componentWillReceiveProps(newProps){
+    const { userData } = newProps
+    if (userData && userData.data) {
+      this.setState({
+        resultData: userData.data
+      })
+    }
   }
 
   handleChange =(key, value)=> {
@@ -33,12 +38,8 @@ class Body extends Component {
       [key]: value
     }, ()=> {
         if(key === 'gender'){
-            const offset = this.state.offset
-            const limit = this.state.limit
             const gender = this.state.gender
             const data = {
-                offset,
-                limit,
                 gender
             }
             this.props.userRequest(data)
@@ -46,46 +47,36 @@ class Body extends Component {
     })
   }
 
-  paginationButton =(event, flag)=> {
-    const { limit, gender } = this.state
-    console.log('🚀 ~ file: Body.js ~ line 29 ~ Body ~ paginationButton ~ limit', limit)
-    console.log('🚀 ~ file: Body.js ~ line 28 ~ Body ~ paginationButton ~ flag', flag)
-    const currPage = Number(event.target.value)
-    console.log('🚀 ~ file: Body.js ~ line 30 ~ Body ~ paginationButton ~ currPage', event.target.value)
-    if (currPage + flag > 0 && currPage) {
-      this.setState(
-        {
-          currentPage: currPage + flag
-        },
-        () => {
-          const cp = currPage + flag
-          const data = {
-            cp, limit, gender
-          }
-
-          console.log('🚀 ~ file: Body.js ~ line 39 ~ Body ~ paginationButton ~ data', data)
-          this.props.userRequest(data)
-        }
-      )
-    }
+  filterSearch=(keyword)=>{
+    const { userData } = this.props
+    const lowerKeyword = keyword.toLowerCase()
+    const data = userData && userData.data
+      let listToDisplay = data.filter((element) => {
+        const username = element.id && element.id.name && element.id.value ? `${element.id.name} ${element.id.value}` : '-'
+        const name = element.name && element.name.title && element.name.first && element.name.last ? `${element.name.title} ${element.name.first} ${element.name.last}` : '-'
+        const email = element.email ? element.email : '-'
+        const gender = element.gender ? element.gender : '-'
+        const date = element.registered ? moment(element.registered.date).format('YYYY-MM-DD HH:m:s') : '-'
+        return username.toLowerCase().includes(lowerKeyword) || name.toLowerCase().includes(lowerKeyword) || email.toLowerCase().includes(lowerKeyword) || gender.toLowerCase().includes(lowerKeyword) || date.toLowerCase().includes(lowerKeyword);
+      });
+      this.setState({
+        resultData: listToDisplay
+      })
   }
 
-
   render () {
-    const { userData } = this.props
-    const { currentPage, gender } = this.state
+    const { gender, resultData} = this.state
     return (
-      <div>
+      <div className='app-container'>
+        <label className='body-title'>
+          Example With Search and Filter
+        </label>
         <FilterSearch
         gender={gender}
-        handleChange={this.handleChange} />
-        <DataTable
-          userData={userData && userData.data}
-        />
-        <Paginations
-          userData={userData && userData.data}
-          currentPage={currentPage}
-          paginationButton={this.paginationButton}
+        handleChange={this.handleChange}
+        filterSearch={this.filterSearch}/>
+        <DataTables
+          userData={resultData}
         />
       </div>
     )
@@ -101,4 +92,3 @@ const dispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, dispatchToProps)(Body)
-// export default Body

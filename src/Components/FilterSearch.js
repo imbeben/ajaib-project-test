@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Row, Col, Button, InputGroup, Form } from 'react-bootstrap'
 import config from '../config'
 
 class FilterSearch extends Component {
@@ -10,24 +9,17 @@ class FilterSearch extends Component {
     }
   }
 
-  handleChangeCarrierChooseMethod (carrierChoiceId, e, selectedCarrierChoice) {
-    const deliveryMethod = selectedCarrierChoice.find(function (element) {
-      return element.carrier.carrier_id === e
-    })
+  resetFilter=()=>{
     this.setState({
-      selectedCarrierChoiceMethod: deliveryMethod,
-      showDropdownCarrierChoice: false,
-      carrierChoiceId
-    }, () => {
-      this.handleChooseCarrier(this.state.selectedCarrierChoiceMethod)
-      this.props.handleisDisableCheckOut(false)
+      keyword: ''
+    },()=> {
+      this.props.handleChange('gender', '')
     })
   }
 
   render () {
     const { keyword } = this.state
     const { gender } = this.props
-    console.log('🚀 ~ file: FilterSearch.js ~ line 30 ~ FilterSearch ~ render ~ gender', gender)
     const listGender = config.gender
     const renderGender = listGender.map((data, index) => {
       return (
@@ -37,39 +29,33 @@ class FilterSearch extends Component {
       )
     })
     return (
-      <div>
-        <Row>
-          <Col>
-            <span>
+      <div className='filter-search'>
+        <div className='row'>
+          <div className='col-3'>
+            <div className='text-align-left'>
               Search
-            </span>
-            <InputGroup>
-              <Form.Control
-                placeholder='Search...'
-                aria-label='Search'
-                aria-describedby='basic-addon2'
-                onChange={(e) => this.handleChange('keyword', e.target.value)} value={keyword}
-              />
-              <Button variant='outline-secondary' id='button-addon2'>
-                Search
-              </Button>
-            </InputGroup>
-          </Col>
-          <Col>
-            <span>
+            </div>
+            <div className="input-group mb-3">
+                <input type="text" className="form-control" placeholder='Search...'
+                onChange={(e) => this.setState({keyword: e.target.value})} value={keyword.toUpperCase()} />
+                <button className='button-search' style={{marginLeft: '5px'}} type="button" onClick={()=> {this.props.filterSearch(keyword)}}>
+                  <i className='fa fa-search padding-left-right-xs' />
+                </button>
+             </div>
+          </div>
+          <div className='col-3'>
+          <div className='text-align-left'>
               Gender
-            </span>
-            <InputGroup>
-              <Form.Select aria-label='Default select example' onChange={(e) => this.props.handleChange('gender', e.target.value)}>
-                {renderGender}
-              </Form.Select>
-              <Button className='margin-left-s'>
-                Reset Filter
-              </Button>
-            </InputGroup>
-          </Col>
-        </Row>
-      </div>
+            </div>
+          <div className="input-group mb-3">
+              <select type="text" className="form-select" value={gender} onChange={(e) => {this.props.handleChange('gender', e.target.value); ; this.setState({keyword: ''})}} >
+              {renderGender}
+              </select>
+              <button className='button-reset' style={{marginLeft: '5px'}} type="button" onClick={() => this.resetFilter()}>Reset Filter</button>
+            </div>
+          </div>
+        </div>
+    </div>
     )
   }
 }
