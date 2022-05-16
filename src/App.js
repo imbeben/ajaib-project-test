@@ -1,7 +1,8 @@
-import Body from './Containers/Body'
-import { MDBBreadcrumb, MDBBreadcrumbItem } from "mdbreact";
-
 import React, { Component } from 'react';
+// Library
+import { MDBBreadcrumb, MDBBreadcrumbItem } from "mdbreact";
+// Components
+import Body from './Containers/Body'
 
 class App extends Component {
   constructor (props) {
