@@ -85,11 +85,13 @@ npm run start or npm start
 ```
 ## Method that can implement for Better Web Performance
 **Disable Query Strings for Static Resources**
+
 example: 
 ```
 weblink.com/home?page=2 // with querry string
 weblink.com/home // without querry string
 ```
+
 **Minify Website’s Scripts**
 Minification of resources means removing unnecessary characters from your HTML, JavaScript, and CSS that are not required to load, such as:
 
