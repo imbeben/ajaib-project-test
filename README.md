@@ -34,6 +34,7 @@ Please make sure you use latest node version
 ## :open_file_folder: Directory Structure
 ```
 ajaib-project-test
+   /public 
 	/src
 		/Components -> pure component
 		/Config
